@@ -16,5 +16,6 @@ Mailbox prototype
  * [x] Required: Tap to dismiss List and Reschedule screens.
  * [x] Optional: Panning from the edge should reveal the menu.
  * [x] Optional: Shake to undo.
+ * [x] Optional: Tapping on compose should animate to show the compose view.
 
-![codepath assignment 2 1](https://github.com/boomslam/CodePath-Mailbox-Week-3/blob/master/CodePath.Assignment.3.2.gif?raw=true)
+![codepath assignment 2 1](https://github.com/boomslam/CodePath-Mailbox-Week-3/blob/master/CodePath.Assignment.3.1.gif?raw=true)
