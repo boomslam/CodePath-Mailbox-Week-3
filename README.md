@@ -17,4 +17,4 @@ Mailbox prototype
  * [x] Optional: Panning from the edge should reveal the menu.
  * [x] Optional: Shake to undo.
 
-![codepath assignment 2 1](https://cloud.githubusercontent.com/assets/6727159/13063614/c6d42706-d3fe-11e5-988d-e3915dcf1fb8.gif)
+![codepath assignment 2 1](https://github.com/boomslam/CodePath-Mailbox-Week-3/blob/master/CodePath.Assignment.3.2.gif?raw=true)
