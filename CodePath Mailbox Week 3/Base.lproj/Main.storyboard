@@ -88,14 +88,27 @@
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </imageView>
                                         </subviews>
-                                        <connections>
-                                            <outletCollection property="gestureRecognizers" destination="VUW-eb-BPM" appends="YES" id="Mfk-CW-9AB"/>
-                                        </connections>
                                     </scrollView>
                                     <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="nav" id="ubQ-aZ-ost" userLabel="Nav View">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="65"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                     </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="nwW-Cr-i1Y" userLabel="Menu Button">
+                                        <rect key="frame" x="15" y="25" width="30" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <gestureRecognizers/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="HEv-io-vd5" appends="YES" id="3hy-kK-qFY"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="gYB-Ke-FYv" userLabel="Compose Button">
+                                        <rect key="frame" x="275" y="25" width="30" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <gestureRecognizers/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="Em3-bD-eUi" appends="YES" id="TZM-5l-Zom"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
@@ -116,11 +129,20 @@
                                     <outletCollection property="gestureRecognizers" destination="eMi-dS-H4V" appends="YES" id="gn0-hg-FQh"/>
                                 </connections>
                             </imageView>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.0" contentMode="center" image="compose" id="n2O-5M-VZm" userLabel="Compose View">
+                                <rect key="frame" x="0.0" y="64" width="320" height="224"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="WQm-4l-PNH" appends="YES" id="HK4-s8-dz3"/>
+                                </connections>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                     </view>
                     <connections>
                         <outlet property="archiveIconView" destination="352-Z2-Hjp" id="FYV-9m-TEJ"/>
+                        <outlet property="composeView" destination="n2O-5M-VZm" id="sjT-Hl-UE2"/>
                         <outlet property="deleteIconView" destination="720-Lo-vwy" id="PZm-8p-Lu4"/>
                         <outlet property="feedImageView" destination="8C0-oN-dDU" id="Chf-yV-6E4"/>
                         <outlet property="feedScrollView" destination="VB2-yq-fcd" id="fMR-Zt-0y3"/>
@@ -158,9 +180,19 @@
                         <action selector="didPanEdgeMainView:" destination="BYZ-38-t0r" id="etU-AS-Ggt"/>
                     </connections>
                 </screenEdgePanGestureRecognizer>
-                <tapGestureRecognizer id="VUW-eb-BPM">
+                <tapGestureRecognizer id="HEv-io-vd5">
                     <connections>
-                        <action selector="tapResetMailbox:" destination="BYZ-38-t0r" id="grG-Zq-grl"/>
+                        <action selector="tapDismissMenu:" destination="BYZ-38-t0r" id="WtH-Tb-Klp"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="Em3-bD-eUi">
+                    <connections>
+                        <action selector="tapCompose:" destination="BYZ-38-t0r" id="2Xl-eS-Tj8"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="WQm-4l-PNH">
+                    <connections>
+                        <action selector="didTapDismissCompose:" destination="BYZ-38-t0r" id="3Gb-xK-J8K"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -169,6 +201,7 @@
     </scenes>
     <resources>
         <image name="archive_icon" width="25" height="25"/>
+        <image name="compose" width="320" height="224"/>
         <image name="delete_icon" width="25" height="25"/>
         <image name="feed" width="320" height="1202"/>
         <image name="help_label" width="320" height="37"/>

@@ -18,6 +18,7 @@ class MailboxViewController: UIViewController {
     @IBOutlet weak var mainWrapperView: UIView!
     @IBOutlet weak var menuView: UIImageView!
     @IBOutlet weak var feedImageView: UIImageView!
+    @IBOutlet weak var composeView: UIImageView!
     
     @IBOutlet weak var rightIconView: UIView!
     @IBOutlet weak var leftIconView: UIView!
@@ -89,12 +90,16 @@ class MailboxViewController: UIViewController {
         
         //initiate pan edge recognizer
         let edgeGesture = UIScreenEdgePanGestureRecognizer(target: self, action: "didPanEdgeMainView:")
+        edgeGesture.edges = UIRectEdge.Left
         mainWrapperView.addGestureRecognizer(edgeGesture)
+        
+//        let tapGesture = UITapGestureRecognizer(target: self, action: "tapCompose:")
+        
         
         //set menu view positions
         mainWrapperOriginalPosition = mainWrapperView.center.x
-        mainWrapperRightPosition = mainWrapperView.center.x + 280
-        mainWrapperStartRightPositionX = mainWrapperView.center.x + 280
+        mainWrapperRightPosition = mainWrapperView.center.x + 260
+        mainWrapperStartRightPositionX = mainWrapperView.center.x + 260
         
         //set color values
         lightGrey = UIColor(red: 229/255, green: 230/255, blue: 233/255, alpha: 1.0)
@@ -103,7 +108,10 @@ class MailboxViewController: UIViewController {
         yellow = UIColor(red: 233/255, green: 189/255, blue: 38/255, alpha: 1.0)
         brown = UIColor(red: 207/255, green: 150/255, blue: 99/255, alpha: 1.0)
         
-
+        
+        
+        
+        
         // Do any additional setup after loading the view.
     }
 
@@ -112,8 +120,95 @@ class MailboxViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    //shake to undo
+    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent?) {
+        if motion == .MotionShake {
+            print("shake")
+            if singleMessageLater == true {
+                let undoAlert = UIAlertController(title: "Undo Reschedule", message: "Do you want to undo rescheduling this message?", preferredStyle: .Alert)
+                
+                let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+                }
+                
+                let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+                    self.singleMessageView.frame.origin.x = 0
+                    self.feedWrapperView.frame.origin.y = self.feedWrapperViewInitialY
+                    self.singleMessageLater = false
+            }
+                
+                undoAlert.addAction(cancelAction)
+                undoAlert.addAction(OKAction)
+                
+                presentViewController(undoAlert, animated: true) {
+                }
+        }
+            
+            else if singleMessageArchived == true {
+                let undoAlert = UIAlertController(title: "Undo Archive", message: "Do you want to undo archiving this message?", preferredStyle: .Alert)
+                
+                let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+                }
+                
+                let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+                    self.singleMessageView.frame.origin.x = 0
+                    self.feedWrapperView.frame.origin.y = self.feedWrapperViewInitialY
+                    self.singleMessageArchived = false
+                }
+                
+                undoAlert.addAction(cancelAction)
+                undoAlert.addAction(OKAction)
+                
+                presentViewController(undoAlert, animated: true) {
+                }
+            }
+            
+            else if singleMessageDeleted == true {
+                let undoAlert = UIAlertController(title: "Undo Delete", message: "Do you want to undo deleting this message?", preferredStyle: .Alert)
+                
+                let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+                }
+                
+                let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+                    self.singleMessageView.frame.origin.x = 0
+                    self.feedWrapperView.frame.origin.y = self.feedWrapperViewInitialY
+                    self.singleMessageDeleted = false
+                }
+                
+                undoAlert.addAction(cancelAction)
+                undoAlert.addAction(OKAction)
+                
+                presentViewController(undoAlert, animated: true) {
+                }
+            }
+            
+            else if singleMessageMoved == true {
+                let undoAlert = UIAlertController(title: "Undo Moving", message: "Do you want to undo moving this message?", preferredStyle: .Alert)
+                
+                let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+                }
+                
+                let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+                    self.singleMessageView.frame.origin.x = 0
+                    self.feedWrapperView.frame.origin.y = self.feedWrapperViewInitialY
+                    self.singleMessageMoved = false
+                }
+                
+                undoAlert.addAction(cancelAction)
+                undoAlert.addAction(OKAction)
+                
+                presentViewController(undoAlert, animated: true) {
+                }
+            }
+            
+            else if singleMessageLater == false && singleMessageArchived ==  false && singleMessageDeleted == false && singleMessageMoved == false {
+                print("nothing to undo")
+            }
+        
+    }
+    }
+    
     //pan message
-    @IBAction func didPanMessage(sender: UIPanGestureRecognizer) {
+    func didPanMessage(sender: UIPanGestureRecognizer) {
         let translation = sender.translationInView(view)
         print(translation.x)
     
@@ -283,7 +378,7 @@ class MailboxViewController: UIViewController {
     }
 
     //dismissing the reschedule menu
-    @IBAction func didTapRescheduleView(sender: UITapGestureRecognizer) {
+    func didTapRescheduleView(sender: UITapGestureRecognizer) {
         UIView.animateWithDuration(0.2, animations: { () -> Void in
             self.rescheduleView.alpha = 0
             }) { (Bool) -> Void in
@@ -294,7 +389,7 @@ class MailboxViewController: UIViewController {
     }
     
     //dismiss list menu
-    @IBAction func didTapListView(sender: UITapGestureRecognizer) {
+    func didTapListView(sender: UITapGestureRecognizer) {
         UIView.animateWithDuration(0.2, animations: { () -> Void in
             self.listView.alpha = 0
             }) { (Bool) -> Void in
@@ -305,23 +400,23 @@ class MailboxViewController: UIViewController {
         
     }
     
-    //reset mailbox
-    @IBAction func tapResetMailbox(sender: UITapGestureRecognizer) {
-        singleMessageView.frame.origin.x = 0
-        UIView.animateWithDuration(0.3) { () -> Void in
-            self.messageBackgroundView.hidden = false
-            self.feedImageView.center.y += 88
-            self.feedScrollView.contentSize.height += 88
-            self.listIconView.hidden = false
-            self.laterIconView.hidden = false
-            self.archiveIconView.hidden = false
-            self.deleteIconView.hidden = false
-        }
-    }
+    //reset mailbox. not using this anymore.    
+//    func tapResetMailbox(sender: UITapGestureRecognizer) {
+//        singleMessageView.frame.origin.x = 0
+//        UIView.animateWithDuration(0.3) { () -> Void in
+//            self.messageBackgroundView.hidden = false
+//            self.feedImageView.center.y += 88
+//            self.feedScrollView.contentSize.height += 88
+//            self.listIconView.hidden = false
+//            self.laterIconView.hidden = false
+//            self.archiveIconView.hidden = false
+//            self.deleteIconView.hidden = false
+//        }
+//    }
     
     
     //edge pan the main view. not working at the moment.
-    @IBAction func didPanEdgeMainView(sender: UIScreenEdgePanGestureRecognizer) {
+    func didPanEdgeMainView(sender: UIScreenEdgePanGestureRecognizer) {
         let translation = sender.translationInView(view)
         let velocity = sender.velocityInView(view)
         print("Edge panning + \(translation.x)")
@@ -353,6 +448,45 @@ class MailboxViewController: UIViewController {
             })
         }
     }
+    
+    //dismiss menu on tap
+    func tapDismissMenu(sender: UITapGestureRecognizer) {
+        if mainWrapperSwiped == true {
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.mainWrapperView.center.x = self.mainWrapperInitialCenter.x
+            })
+        }
+        
+    }
+    
+    //reveal compose screen
+    @IBAction func tapCompose(sender: UITapGestureRecognizer) {
+        print("did tap compose")
+        UIView.animateWithDuration(0.3) { () -> Void in
+            self.composeView.alpha = 1
+            self.feedImageView.alpha = 0
+    }
+    
+    
+    //    func tapCompose(sender: UITapGestureRecognizer) {
+//        print("did tap compose")
+//        UIView.animateWithDuration(0.3) { () -> Void in
+//            self.composeView.alpha = 1
+//        }
+    }
+    
+    //dismiss compose view
+    @IBAction func didTapDismissCompose(sender: UITapGestureRecognizer) {
+        print("dismiss compose")
+        UIView.animateWithDuration(0.3) { () -> Void in
+            self.composeView.alpha = 0
+            self.feedImageView.alpha = 1
+        }
+    }
+    
+
+
+    
     
     
     /*
